@@ -17,5 +17,8 @@ class MainActivity : AppCompatActivity() {
         mHelper.setClick(R.id.action1) {
             ToastUtils.show("action1")
         }
+        mHelper.setClick(R.id.action2) {
+            ToastUtils.show("action2")
+        }
     }
 }
