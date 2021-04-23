@@ -5,78 +5,77 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="5dp"
     tools:ignore="HardcodedText">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <Button
             android:id="@+id/action1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/action_btn"
             android:text="1" />
 
         <Button
             android:id="@+id/action2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/action_btn"
             android:text="2" />
 
         <Button
             android:id="@+id/action3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/action_btn"
             android:text="3" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:weightSum="3">
 
         <Button
             android:id="@+id/action4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/action_btn"
             android:text="4" />
 
         <Button
             android:id="@+id/action5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/action_btn"
             android:text="5" />
 
         <Button
             android:id="@+id/action6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/action_btn"
             android:text="6" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <Button
             android:id="@+id/action7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/action_btn"
             android:text="7" />
 
         <Button
             android:id="@+id/action8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/action_btn"
             android:text="8" />
 
         <Button
             android:id="@+id/action9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/action_btn"
             android:text="9" />
     </LinearLayout>
 
+    <Button
+        android:id="@+id/action10"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="10" />
 </LinearLayout>
