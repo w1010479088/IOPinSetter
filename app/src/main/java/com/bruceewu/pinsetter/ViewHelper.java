@@ -122,6 +122,10 @@ public class ViewHelper {
         getView(viewID).setSelected(sel);
     }
 
+    public boolean isSel(int viewID) {
+        return getView(viewID).isSelected();
+    }
+
     public void setEnable(int viewID, boolean able) {
         getView(viewID).setEnabled(able);
     }
