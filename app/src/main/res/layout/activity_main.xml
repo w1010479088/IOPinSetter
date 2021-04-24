@@ -69,7 +69,7 @@
         <Button
             android:id="@+id/action08"
             style="@style/action_btn"
-            android:text="Log"
+            android:text="08"
             android:textAllCaps="false" />
     </LinearLayout>
 

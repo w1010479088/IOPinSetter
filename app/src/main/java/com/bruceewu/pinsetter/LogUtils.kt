@@ -9,7 +9,7 @@ class LogUtils {
         private var interrupt: Boolean = false
 
         fun log(content: String?) {
-            if (BuildConfig.DEBUG) {
+            if (false) {    // 不需要Log了
                 if (!interrupt) {
                     builder.append(content ?: "------>")
                     builder.append("\n")

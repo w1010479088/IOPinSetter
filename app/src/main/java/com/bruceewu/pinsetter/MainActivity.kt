@@ -23,7 +23,8 @@ class MainActivity : AppCompatActivity(), ThreadPool.IUpdater {
         mHelper = ViewHelper(this.window.decorView)
         mSDKHelper = PinSDKHelper(this)
         mHelper.setClick(R.id.action08) {
-            LogActivity.open(this)
+//            LogActivity.open(this)
+            ToastUtils.show("暂未定义...")
         }
         IDS.forEachIndexed { index, _id ->
             mHelper.setClick(_id) {
