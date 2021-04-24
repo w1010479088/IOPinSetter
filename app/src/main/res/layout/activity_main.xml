@@ -14,19 +14,19 @@
         android:layout_weight="1">
 
         <Button
-            android:id="@+id/action1"
+            android:id="@+id/action00"
             style="@style/action_btn"
-            android:text="1" />
+            android:text="00" />
 
         <Button
-            android:id="@+id/action2"
+            android:id="@+id/action01"
             style="@style/action_btn"
-            android:text="2" />
+            android:text="01" />
 
         <Button
-            android:id="@+id/action3"
+            android:id="@+id/action02"
             style="@style/action_btn"
-            android:text="3" />
+            android:text="02" />
     </LinearLayout>
 
     <LinearLayout
@@ -36,19 +36,19 @@
         android:weightSum="3">
 
         <Button
-            android:id="@+id/action4"
+            android:id="@+id/action03"
             style="@style/action_btn"
-            android:text="4" />
+            android:text="03" />
 
         <Button
-            android:id="@+id/action5"
+            android:id="@+id/action04"
             style="@style/action_btn"
-            android:text="5" />
+            android:text="04" />
 
         <Button
-            android:id="@+id/action6"
+            android:id="@+id/action05"
             style="@style/action_btn"
-            android:text="6" />
+            android:text="05" />
     </LinearLayout>
 
     <LinearLayout
@@ -57,26 +57,20 @@
         android:layout_weight="1">
 
         <Button
-            android:id="@+id/action7"
+            android:id="@+id/action06"
             style="@style/action_btn"
-            android:text="7" />
+            android:text="06" />
 
         <Button
-            android:id="@+id/action8"
+            android:id="@+id/action07"
             style="@style/action_btn"
-            android:text="8" />
+            android:text="07" />
 
         <Button
-            android:id="@+id/action9"
+            android:id="@+id/action08"
             style="@style/action_btn"
-            android:text="9" />
+            android:text="Log"
+            android:textAllCaps="false" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/action10"
-        style="@style/action_btn"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="10" />
 </LinearLayout>
