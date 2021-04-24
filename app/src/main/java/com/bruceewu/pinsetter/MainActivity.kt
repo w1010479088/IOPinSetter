@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity(), ThreadPool.IUpdater {
 
     private fun initView() {
         mHelper = ViewHelper(this.window.decorView)
-        mSDKHelper = PinSDKHelper()
+        mSDKHelper = PinSDKHelper(this)
         mHelper.setClick(R.id.action08) {
             LogActivity.open(this)
         }

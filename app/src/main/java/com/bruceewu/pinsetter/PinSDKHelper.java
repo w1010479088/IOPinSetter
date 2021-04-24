@@ -1,12 +1,13 @@
 package com.bruceewu.pinsetter;
 
 import android.app.smdt.SmdtManager;
+import android.content.Context;
 
 public class PinSDKHelper {
     private final SmdtManager manager;
 
-    public PinSDKHelper() {
-        manager = SmdtManager.create(App.Companion.getInstance());
+    public PinSDKHelper(Context context) {
+        manager = SmdtManager.create(context);
         if (manager == null) {
             LogUtils.Companion.log("PinSdk init fail");
         } else {
@@ -16,19 +17,21 @@ public class PinSDKHelper {
 
     public boolean get(int num) {
         try {
-            return manager.smdtReadExtrnalGpioValue(num) == 1;
+            int readValue = manager.smdtReadExtrnalGpioValue(num);
+            LogUtils.Companion.log(String.format("PinSdk get %s  = %s", String.valueOf(num), String.valueOf(readValue)));
+            return readValue == 1;
         } catch (Exception ex) {
-            LogUtils.Companion.log(ex.getMessage());
+            LogUtils.Companion.log("get Error = " + ex.getMessage());
+            return false;
         }
-        return false;
     }
 
-    public boolean set(int num, boolean high) {
+    public void set(int num, boolean high) {
         try {
-            return manager.smdtSetExtrnalGpioValue(num, high) == 1;
+            int setResult = manager.smdtSetExtrnalGpioValue(num, high);
+            LogUtils.Companion.log(String.format("PinSdk set %s  = %s , result = %s", String.valueOf(num), String.valueOf(high), String.valueOf(setResult)));
         } catch (Exception ex) {
-            LogUtils.Companion.log(ex.getMessage());
+            LogUtils.Companion.log("set Error = " + ex.getMessage());
         }
-        return false;
     }
 }
