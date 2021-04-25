@@ -17,7 +17,7 @@ class App : Application() {
 
         fun needIOObserver(): Boolean = debug()
 
-        private fun debug(): Boolean = false
+        private fun debug(): Boolean = true
     }
 
     override fun onCreate() {
