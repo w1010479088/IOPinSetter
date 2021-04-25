@@ -24,11 +24,13 @@ class MainActivity : AppCompatActivity(), ThreadPool.IUpdater {
         mHelper = ViewHelper(this.window.decorView)
         mSDKHelper = PinSDKHelper(this)
         mHelper.setClick(R.id.action08) {
-            loopClicked()
+            loop()
         }
         IDS.forEachIndexed { index, _id ->
             mHelper.setClick(_id) {
-                if (!mLooper) { //循环中的按钮,不能点击
+                if (mLooper) { //循环中的按钮,不能点击
+                    ToastUtils.show("循环中,不能点击...")
+                } else {
                     val high = !mSDKHelper.get(index)
                     val success = mSDKHelper.set(index, high)
                     if (success) {
@@ -46,7 +48,7 @@ class MainActivity : AppCompatActivity(), ThreadPool.IUpdater {
 
     }
 
-    private fun loopClicked() {
+    private fun loop() {
         if (mLooper) {
             ThreadPool.unRegisterObserver(this)
             mLooper = false
