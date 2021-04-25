@@ -6,7 +6,9 @@ import java.lang.Exception
 
 class MainActivity : AppCompatActivity(), ThreadPool.IUpdater {
     private lateinit var mSDKHelper: PinSDKHelper
+    private var mPreState: GPIOLoopColorState = GPIOLoopColorState.NONE
     private var mLooper: Boolean = false
+    private var mCount = 0
 
     private val IDS = arrayOf(
         R.id.action00, R.id.action01, R.id.action02, R.id.action03,
@@ -45,13 +47,36 @@ class MainActivity : AppCompatActivity(), ThreadPool.IUpdater {
     }
 
     override fun update() {
+        if (mCount == 0 || mCount == 1) {
+            if (mCount == 0) {  // 亮屏 1s
+                mPreState = mPreState.next()
+            }
+            showState(mPreState)
+        } else {
+            showState(GPIOLoopColorState.NONE)
+        }
 
+        // mCount检查/重置
+        if (mCount >= 2) {
+            mCount = 0
+        } else {
+            mCount++
+        }
+    }
+
+    private fun showState(color: GPIOLoopColorState) {
+        LogUtils.log("展示:${color.tag}")
+        IDS.forEachIndexed { index, i ->
+            mSDKHelper.set(index, color.state.get(index))
+        }
     }
 
     private fun loop() {
         if (mLooper) {
             ThreadPool.unRegisterObserver(this)
+            reset()
             mLooper = false
+            mPreState = GPIOLoopColorState.NONE
         } else {
             reset() // 先全部重置UI以及状态值,然后开启循环
             ThreadPool.registerObserver(this)
@@ -88,3 +113,4 @@ class MainActivity : AppCompatActivity(), ThreadPool.IUpdater {
         super.onDestroy()
     }
 }
+
