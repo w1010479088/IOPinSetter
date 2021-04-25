@@ -6,10 +6,10 @@ import java.lang.StringBuilder
 class LogUtils {
     companion object {
         private var builder = StringBuilder()
-        private var interrupt: Boolean = false
+        private var interrupt: Boolean = true
 
         fun log(content: String?) {
-            if (false) {    // 不需要Log了
+            if (App.needLog()) {
                 if (!interrupt) {
                     builder.append(content ?: "------>")
                     builder.append("\n")

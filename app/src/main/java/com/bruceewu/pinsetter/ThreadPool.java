@@ -11,6 +11,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class ThreadPool {
+    private static final int TIMER_PERIOD = 500;
     private final Handler handler;
     private final ExecutorService executor = Executors.newFixedThreadPool(4);
     private final List<IUpdater> observers = new ArrayList<>();
@@ -22,7 +23,7 @@ public class ThreadPool {
             for (IUpdater item : HOLDER.INSTANCE.observers) {
                 main(item::update);
             }
-        }, 0, 500, TimeUnit.MILLISECONDS);
+        }, 0, TIMER_PERIOD, TimeUnit.MILLISECONDS);
     }
 
     private static class HOLDER {

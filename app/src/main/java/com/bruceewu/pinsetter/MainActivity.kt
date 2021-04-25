@@ -76,6 +76,7 @@ class MainActivity : AppCompatActivity(), ThreadPool.IUpdater {
 
     override fun onDestroy() {
         ThreadPool.unRegisterObserver(this)
+        mSDKHelper.onDestroy()
         super.onDestroy()
     }
 }

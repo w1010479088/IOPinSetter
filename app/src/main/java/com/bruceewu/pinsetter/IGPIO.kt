@@ -13,7 +13,7 @@ interface IGPIO {
     companion object {
 
         fun newInstance(context: Context): IGPIO {
-            if (BuildConfig.DEBUG) {
+            if (App.debugIO()) {
                 return DebugGPIO()
             } else {
                 return ReleaseGPIO(context)

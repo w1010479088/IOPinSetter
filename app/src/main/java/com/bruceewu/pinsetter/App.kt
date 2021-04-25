@@ -10,6 +10,14 @@ class App : Application() {
         fun getInstance(): Application? {
             return app
         }
+
+        fun debugIO(): Boolean = debug()
+
+        fun needLog(): Boolean = debug()
+
+        fun needIOObserver(): Boolean = debug()
+
+        private fun debug(): Boolean = BuildConfig.DEBUG
     }
 
     override fun onCreate() {
