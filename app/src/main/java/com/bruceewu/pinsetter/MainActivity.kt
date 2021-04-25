@@ -6,6 +6,7 @@ import java.lang.Exception
 
 class MainActivity : AppCompatActivity(), ThreadPool.IUpdater {
     private lateinit var mSDKHelper: PinSDKHelper
+    private var mLooper: Boolean = false
 
     private val IDS = arrayOf(
         R.id.action00, R.id.action01, R.id.action02, R.id.action03,
@@ -23,18 +24,46 @@ class MainActivity : AppCompatActivity(), ThreadPool.IUpdater {
         mHelper = ViewHelper(this.window.decorView)
         mSDKHelper = PinSDKHelper(this)
         mHelper.setClick(R.id.action08) {
-//            LogActivity.open(this)
-            ToastUtils.show("暂未定义...")
+            loopClicked()
         }
         IDS.forEachIndexed { index, _id ->
             mHelper.setClick(_id) {
-                mSDKHelper.set(index, !mSDKHelper.get(index))
+                if (!mLooper) { //循环中的按钮,不能点击
+                    mSDKHelper.set(index, !mSDKHelper.get(index))
+                }
             }
         }
-        ThreadPool.registerObserver(this)
+        refresh()
     }
 
     override fun update() {
+        LogUtils.log("Updating.....")
+    }
+
+    private fun loopClicked() {
+        if (mLooper) {
+            ThreadPool.unRegisterObserver(this)
+            mLooper = false
+        } else {
+            reset() // 先全部重置UI以及状态值,然后开启循环
+            ThreadPool.registerObserver(this)
+            mLooper = true
+        }
+        mHelper.setSel(R.id.action08, mLooper)
+    }
+
+    private fun reset() {
+        try {
+            IDS.forEachIndexed { index, id ->
+                mSDKHelper.set(index, false)
+                mHelper.setSel(id, false)
+            }
+        } catch (ex: Exception) {
+            LogUtils.log(ex.message)
+        }
+    }
+
+    private fun refresh() {
         try {
             IDS.forEachIndexed { index, id ->
                 val high = mSDKHelper.get(index)
@@ -43,5 +72,10 @@ class MainActivity : AppCompatActivity(), ThreadPool.IUpdater {
         } catch (ex: Exception) {
             LogUtils.log(ex.message)
         }
+    }
+
+    override fun onDestroy() {
+        ThreadPool.unRegisterObserver(this)
+        super.onDestroy()
     }
 }

@@ -22,7 +22,7 @@ public class ThreadPool {
             for (IUpdater item : HOLDER.INSTANCE.observers) {
                 main(item::update);
             }
-        }, 0, 1, TimeUnit.SECONDS);
+        }, 0, 500, TimeUnit.MILLISECONDS);
     }
 
     private static class HOLDER {
