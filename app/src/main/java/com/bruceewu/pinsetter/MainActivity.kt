@@ -72,6 +72,7 @@ class MainActivity : AppCompatActivity(), ThreadPool.IUpdater {
     }
 
     private fun loop() {
+        mCount = 0
         if (mLooper) {
             ThreadPool.unRegisterObserver(this)
             reset()
