@@ -31,6 +31,7 @@ class DebugGPIO : IGPIO {
         IOState(false),
         IOState(false),
         IOState(false),
+        IOState(false),
         IOState(false)
     )
 

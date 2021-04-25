@@ -14,7 +14,7 @@ class LogUtils {
                     builder.append(content ?: "------>")
                     builder.append("\n")
                 }
-                Log.d("bruceewu", content ?: "")
+                Log.d("BruceeWuTag:${Thread.currentThread().name}--->", content ?: "")
             }
         }
 

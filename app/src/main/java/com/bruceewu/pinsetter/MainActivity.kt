@@ -29,7 +29,13 @@ class MainActivity : AppCompatActivity(), ThreadPool.IUpdater {
         IDS.forEachIndexed { index, _id ->
             mHelper.setClick(_id) {
                 if (!mLooper) { //循环中的按钮,不能点击
-                    mSDKHelper.set(index, !mSDKHelper.get(index))
+                    val high = !mSDKHelper.get(index)
+                    val success = mSDKHelper.set(index, high)
+                    if (success) {
+                        mHelper.setSel(_id, high)
+                    } else {
+                        ToastUtils.show("操作失败!")
+                    }
                 }
             }
         }
@@ -37,7 +43,7 @@ class MainActivity : AppCompatActivity(), ThreadPool.IUpdater {
     }
 
     override fun update() {
-        LogUtils.log("Updating.....")
+
     }
 
     private fun loopClicked() {

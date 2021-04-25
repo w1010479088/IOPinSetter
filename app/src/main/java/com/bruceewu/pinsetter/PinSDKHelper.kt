@@ -2,7 +2,6 @@ package com.bruceewu.pinsetter
 
 import android.content.Context
 import com.bruceewu.pinsetter.IGPIO.Companion.newInstance
-import com.bruceewu.pinsetter.LogUtils.Companion.log
 import com.bruceewu.pinsetter.ThreadPool.IUpdater
 
 class PinSDKHelper(context: Context?) : IUpdater {
@@ -20,35 +19,42 @@ class PinSDKHelper(context: Context?) : IUpdater {
         return try {
             mIOControl.read(num)
         } catch (ex: Exception) {
-            logError(ex)
+            logError("get", ex)
             false
         }
     }
 
-    operator fun set(num: Int, high: Boolean) {
+    operator fun set(num: Int, high: Boolean): Boolean {
         try {
-            mIOControl.set(num, high)
+            return mIOControl.set(num, high)
         } catch (ex: Exception) {
-            logError(ex)
+            logError("set", ex)
+            return false
         }
     }
 
+    private var mCount = 0
+
     override fun update() {
-        mIOLogs.clear()
-        mIOLogs.append("--->")
-        for (i in 0 until (IO_SIZE - 1)) {
-            mIOLogs.append(if (get(i)) 1 else 0)
-            mIOLogs.append("-")
+        if (mCount % 5 == 0) {  // 5s中一次
+            mIOLogs.clear()
+            mIOLogs.append("--->")
+            for (i in 0 until IO_SIZE) {
+                mIOLogs.append(if (get(i)) 1 else 0)
+                mIOLogs.append("-")
+            }
+            mIOLogs.append("---<")
+            LogUtils.log(mIOLogs.toString())
+            mCount = 0
         }
-        mIOLogs.append("---<")
-        log(mIOLogs.toString())
+        mCount++
     }
 
     fun onDestroy() {
         ThreadPool.unRegisterObserver(this)
     }
 
-    private fun logError(ex: Exception) {
-        log("set Error = " + ex.message)
+    private fun logError(tag: String, ex: Exception) {
+        LogUtils.log("$tag Error = " + ex.message)
     }
 }
