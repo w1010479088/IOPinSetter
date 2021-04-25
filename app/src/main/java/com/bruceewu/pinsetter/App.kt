@@ -17,7 +17,7 @@ class App : Application() {
 
         fun needIOObserver(): Boolean = debug()
 
-        private fun debug(): Boolean = BuildConfig.DEBUG
+        private fun debug(): Boolean = false
     }
 
     override fun onCreate() {
