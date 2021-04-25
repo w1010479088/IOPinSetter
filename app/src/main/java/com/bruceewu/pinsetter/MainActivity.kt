@@ -50,8 +50,8 @@ class MainActivity : AppCompatActivity(), ThreadPool.IUpdater {
         if (mCount == 0 || mCount == 1) {
             if (mCount == 0) {  // 亮屏 1s
                 mPreState = mPreState.next()
+                showState(mPreState)
             }
-            showState(mPreState)
         } else {
             showState(GPIOLoopColorState.NONE)
         }
