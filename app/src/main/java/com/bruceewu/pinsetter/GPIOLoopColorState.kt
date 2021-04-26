@@ -1,9 +1,9 @@
 package com.bruceewu.pinsetter
 
 enum class GPIOLoopColorState(val tag: String, val state: IOAllState) {
-    RED("红灯", IOAllState(false, true, true, false, true, true, false, false)),
-    GREEN("绿灯", IOAllState(true, true, false, true, true, false, false, false)),
-    BLUE("蓝灯", IOAllState(false, true, false, false, true, false, false, false)),
+    RED("红灯", IOAllState(false, true, true, false, true, true, true, true)),
+    GREEN("绿灯", IOAllState(true, true, false, true, true, false, true, true)),
+    BLUE("蓝灯", IOAllState(false, true, false, false, true, false, true, true)),
     BLACK("黑灯", IOAllState(true, true, true, true, true, true, true, true));
 
     fun next(): GPIOLoopColorState {

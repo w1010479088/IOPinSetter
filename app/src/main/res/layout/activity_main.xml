@@ -69,6 +69,7 @@
         <Button
             android:id="@+id/action08"
             style="@style/action_btn"
+            android:background="@drawable/selector_btn_green_grey"
             android:text="循环"
             android:textAllCaps="false" />
     </LinearLayout>

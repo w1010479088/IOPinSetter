@@ -17,7 +17,7 @@ class App : Application() {
 
         fun needIOObserver(): Boolean = debug()
 
-        fun needColorRefresh(): Boolean = false
+        fun needColorRefresh(): Boolean = debug()
 
         private fun debug(): Boolean = BuildConfig.DEBUG
     }

@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity(), ThreadPool.IUpdater {
         if (mLooper) {
             ThreadPool.unRegisterObserver(this)
             IDS.forEachIndexed { index, id ->
-                mSDKHelper.set(index, false)
+                mSDKHelper.set(index, true)
             }
             mLooper = false
             mPreState = GPIOLoopColorState.BLACK
@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity(), ThreadPool.IUpdater {
         } else {
             ThreadPool.registerObserver(this)
             IDS.forEach { id ->
-                mHelper.setSel(id, false)
+                mHelper.setSel(id, true)
             }
             mLooper = true
         }
