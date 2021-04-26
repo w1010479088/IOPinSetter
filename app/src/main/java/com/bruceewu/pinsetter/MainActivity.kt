@@ -8,7 +8,6 @@ class MainActivity : AppCompatActivity(), ThreadPool.IUpdater {
     private lateinit var mSDKHelper: PinSDKHelper
     private var mPreState: GPIOLoopColorState = GPIOLoopColorState.BLACK
     private var mLooper: Boolean = false
-    private var mCount = 0
 
     private val IDS = arrayOf(
         R.id.action00, R.id.action01, R.id.action02, R.id.action03,
@@ -47,44 +46,34 @@ class MainActivity : AppCompatActivity(), ThreadPool.IUpdater {
     }
 
     override fun update() {
-        if (mCount == 0 || mCount == 1) {
-            if (mCount == 0) {  // 亮屏 1s
-                mPreState = mPreState.next()
-                showState(mPreState)
-            }
-        } else {
-            showState(GPIOLoopColorState.BLACK)
-        }
-
-        // mCount检查/重置
-        if (mCount >= 2) {
-            mCount = 0
-        } else {
-            mCount++
-        }
+        mPreState = mPreState.next()
+        showState(mPreState)
     }
 
     private fun showState(color: GPIOLoopColorState) {
         LogUtils.log("展示:${color.tag}")
         IDS.forEachIndexed { index, i ->
             mSDKHelper.set(index, color.state.get(index))
-            if (App.needUIStateChangeWhileLoop()) {
+            if (App.needColorRefresh()) {
                 mHelper.setSel(i, mSDKHelper.get(index))
             }
         }
     }
 
     private fun loop() {
-        mCount = 0
         if (mLooper) {
             ThreadPool.unRegisterObserver(this)
+            IDS.forEachIndexed { index, id ->
+                mSDKHelper.set(index, false)
+            }
             mLooper = false
+            mPreState = GPIOLoopColorState.BLACK
             refresh()
         } else {
+            ThreadPool.registerObserver(this)
             IDS.forEach { id ->
                 mHelper.setSel(id, false)
             }
-            ThreadPool.registerObserver(this)
             mLooper = true
         }
         mHelper.setSel(R.id.action08, mLooper)
@@ -102,8 +91,8 @@ class MainActivity : AppCompatActivity(), ThreadPool.IUpdater {
     }
 
     override fun onDestroy() {
-        ThreadPool.unRegisterObserver(this)
         mSDKHelper.onDestroy()
+        ThreadPool.unRegisterObserver(this)
         super.onDestroy()
     }
 }

@@ -25,14 +25,14 @@ interface IGPIO {
 class DebugGPIO : IGPIO {
 
     private val IOS = listOf(
-        IOState(false),
-        IOState(false),
-        IOState(false),
-        IOState(false),
-        IOState(false),
-        IOState(false),
-        IOState(false),
-        IOState(false)
+        IOState(true),
+        IOState(true),
+        IOState(true),
+        IOState(true),
+        IOState(true),
+        IOState(true),
+        IOState(true),
+        IOState(true)
     )
 
     override fun read(num: Int) = IOS[num].high
