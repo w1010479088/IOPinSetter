@@ -27,21 +27,18 @@ class LogActivity : Activity() {
         }
         mHelper.setClick(R.id.clear) {
             LogUtils.clear()
+        }
+        LogUtils.setListener(Runnable {
             refreshLog()
-        }
-        mHelper.setClick(R.id.interrupt) {
-            LogUtils.interrupt()
-            refreshInterrupt()
-        }
-        refreshInterrupt()
-        refreshLog()
-    }
-
-    private fun refreshInterrupt() {
-        mHelper.setText(R.id.interrupt, if (LogUtils.isInterrupt()) "记录中断中..." else "正在记录中...")
+        })
     }
 
     private fun refreshLog() {
         mHelper.setText(R.id.log, LogUtils.read())
+    }
+
+    override fun onDestroy() {
+        LogUtils.clearListener()
+        super.onDestroy()
     }
 }
