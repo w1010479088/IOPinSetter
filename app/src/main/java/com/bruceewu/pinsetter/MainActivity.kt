@@ -6,7 +6,7 @@ import java.lang.Exception
 
 class MainActivity : AppCompatActivity(), ThreadPool.IUpdater {
     private lateinit var mSDKHelper: PinSDKHelper
-    private var mPreState: GPIOLoopColorState = GPIOLoopColorState.NONE
+    private var mPreState: GPIOLoopColorState = GPIOLoopColorState.BLACK
     private var mLooper: Boolean = false
     private var mCount = 0
 
@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity(), ThreadPool.IUpdater {
                 showState(mPreState)
             }
         } else {
-            showState(GPIOLoopColorState.NONE)
+            showState(GPIOLoopColorState.BLACK)
         }
 
         // mCount检查/重置
@@ -68,6 +68,9 @@ class MainActivity : AppCompatActivity(), ThreadPool.IUpdater {
         LogUtils.log("展示:${color.tag}")
         IDS.forEachIndexed { index, i ->
             mSDKHelper.set(index, color.state.get(index))
+            if (App.needUIStateChangeWhileLoop()) {
+                mHelper.setSel(i, mSDKHelper.get(index))
+            }
         }
     }
 
@@ -75,26 +78,16 @@ class MainActivity : AppCompatActivity(), ThreadPool.IUpdater {
         mCount = 0
         if (mLooper) {
             ThreadPool.unRegisterObserver(this)
-            reset()
             mLooper = false
-            mPreState = GPIOLoopColorState.NONE
+            refresh()
         } else {
-            reset() // 先全部重置UI以及状态值,然后开启循环
+            IDS.forEach { id ->
+                mHelper.setSel(id, false)
+            }
             ThreadPool.registerObserver(this)
             mLooper = true
         }
         mHelper.setSel(R.id.action08, mLooper)
-    }
-
-    private fun reset() {
-        try {
-            IDS.forEachIndexed { index, id ->
-                mSDKHelper.set(index, false)
-                mHelper.setSel(id, false)
-            }
-        } catch (ex: Exception) {
-            LogUtils.log(ex.message)
-        }
     }
 
     private fun refresh() {

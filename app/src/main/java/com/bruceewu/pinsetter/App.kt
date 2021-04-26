@@ -17,6 +17,8 @@ class App : Application() {
 
         fun needIOObserver(): Boolean = debug()
 
+        fun needUIStateChangeWhileLoop(): Boolean = debug()
+
         private fun debug(): Boolean = BuildConfig.DEBUG
     }
 

@@ -4,20 +4,20 @@ enum class GPIOLoopColorState(val tag: String, val state: IOAllState) {
     RED("红灯", IOAllState(false, true, true, false, true, true, false, false)),
     GREEN("绿灯", IOAllState(true, true, false, true, true, false, false, false)),
     BLUE("蓝灯", IOAllState(false, true, false, false, true, false, false, false)),
-    NONE("黑灯", IOAllState(false, false, false, false, false, false, false, false));
+    BLACK("黑灯", IOAllState(true, true, true, true, true, true, true, true));
 
     fun next(): GPIOLoopColorState {
         return when (cur()) {
             RED -> GREEN
             GREEN -> BLUE
             BLUE -> RED
-            NONE -> RED
+            BLACK -> RED
         }
     }
 
     private fun cur(): GPIOLoopColorState = (values().firstOrNull {
         it.state.same(this@GPIOLoopColorState.state)
-    } ?: NONE)
+    } ?: BLACK)
 }
 
 data class IOAllState(
