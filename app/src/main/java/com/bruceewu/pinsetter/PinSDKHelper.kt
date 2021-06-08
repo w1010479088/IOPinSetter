@@ -10,6 +10,7 @@ class PinSDKHelper(context: Context?) : IUpdater {
     private val IO_SIZE = 8
 
     init {
+        reset() //重置高低电平
         if (App.needIOObserver()) {
             ThreadPool.registerObserver(this) //Debug 检测IO变化
         }
@@ -56,5 +57,17 @@ class PinSDKHelper(context: Context?) : IUpdater {
 
     private fun logError(tag: String, ex: Exception) {
         LogUtils.log("$tag Error = " + ex.message)
+    }
+
+    //需求:100,100,11
+    private fun reset() {
+        val ioReset = listOf(
+            IOState(true), IOState(false), IOState(false),
+            IOState(true), IOState(false), IOState(false),
+            IOState(true), IOState(true)
+        )
+        for (i in 0 until IO_SIZE) {
+            set(i, ioReset[i].high)
+        }
     }
 }
