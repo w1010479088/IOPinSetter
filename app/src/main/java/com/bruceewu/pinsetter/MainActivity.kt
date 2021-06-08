@@ -90,6 +90,10 @@ class MainActivity : AppCompatActivity(), ThreadPool.IUpdater {
         }
     }
 
+    override fun onBackPressed() {
+        moveTaskToBack(false)
+    }
+
     override fun onDestroy() {
         mSDKHelper.onDestroy()
         ThreadPool.unRegisterObserver(this)
