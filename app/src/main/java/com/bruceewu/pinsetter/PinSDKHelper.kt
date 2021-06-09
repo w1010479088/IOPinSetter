@@ -4,16 +4,36 @@ import android.content.Context
 import com.bruceewu.pinsetter.IGPIO.Companion.newInstance
 import com.bruceewu.pinsetter.ThreadPool.IUpdater
 
+object PinSDKHolder {
+    private val sdk = PinSDKHelper(App.getInstance())
+
+    fun init() {
+        sdk.initSDK()
+    }
+
+    fun get(pos: Int): Boolean = sdk[pos]
+
+    fun set(pos: Int, high: Boolean): Boolean = sdk.set(pos, high)
+
+    fun onDestroy() {
+        sdk.onDestroy()
+    }
+}
+
 class PinSDKHelper(context: Context?) : IUpdater {
     private val mIOControl: IGPIO = newInstance(context!!)
     private val mIOLogs = StringBuilder()
     private val IO_SIZE = 8
 
     init {
-        reset() //重置高低电平
+        reset()
         if (App.needIOObserver()) {
             ThreadPool.registerObserver(this) //Debug 检测IO变化
         }
+    }
+
+    fun initSDK() {
+        LogUtils.log("SDK init")
     }
 
     operator fun get(num: Int): Boolean {

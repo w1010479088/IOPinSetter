@@ -5,7 +5,6 @@ import android.os.Bundle
 import java.lang.Exception
 
 class MainActivity : AppCompatActivity(), ThreadPool.IUpdater {
-    private lateinit var mSDKHelper: PinSDKHelper
     private var mPreState: GPIOLoopColorState = GPIOLoopColorState.BLACK
     private var mLooper: Boolean = false
 
@@ -23,7 +22,7 @@ class MainActivity : AppCompatActivity(), ThreadPool.IUpdater {
 
     private fun initView() {
         mHelper = ViewHelper(this.window.decorView)
-        mSDKHelper = PinSDKHelper(this)
+        PinSDKHolder.init()
         mHelper.setClick(R.id.action08) {
             loop()
         }
@@ -32,8 +31,8 @@ class MainActivity : AppCompatActivity(), ThreadPool.IUpdater {
                 if (mLooper) { //循环中的按钮,不能点击
                     ToastUtils.show("循环中,不能点击...")
                 } else {
-                    val high = !mSDKHelper.get(index)
-                    val success = mSDKHelper.set(index, high)
+                    val high = !PinSDKHolder.get(index)
+                    val success = PinSDKHolder.set(index, high)
                     if (success) {
                         mHelper.setSel(_id, high)
                     } else {
@@ -53,9 +52,9 @@ class MainActivity : AppCompatActivity(), ThreadPool.IUpdater {
     private fun showState(color: GPIOLoopColorState) {
         LogUtils.log("展示:${color.tag}")
         IDS.forEachIndexed { index, i ->
-            mSDKHelper.set(index, color.state.get(index))
+            PinSDKHolder.set(index, color.state.get(index))
             if (App.needColorRefresh()) {
-                mHelper.setSel(i, mSDKHelper.get(index))
+                mHelper.setSel(i, PinSDKHolder.get(index))
             }
         }
     }
@@ -64,7 +63,7 @@ class MainActivity : AppCompatActivity(), ThreadPool.IUpdater {
         if (mLooper) {
             ThreadPool.unRegisterObserver(this)
             IDS.forEachIndexed { index, id ->
-                mSDKHelper.set(index, true)
+                PinSDKHolder.set(index, true)
             }
             mLooper = false
             mPreState = GPIOLoopColorState.BLACK
@@ -82,7 +81,7 @@ class MainActivity : AppCompatActivity(), ThreadPool.IUpdater {
     private fun refresh() {
         try {
             IDS.forEachIndexed { index, id ->
-                val high = mSDKHelper.get(index)
+                val high = PinSDKHolder.get(index)
                 mHelper.setSel(id, high)
             }
         } catch (ex: Exception) {
@@ -95,7 +94,7 @@ class MainActivity : AppCompatActivity(), ThreadPool.IUpdater {
     }
 
     override fun onDestroy() {
-        mSDKHelper.onDestroy()
+        PinSDKHolder.onDestroy()
         ThreadPool.unRegisterObserver(this)
         super.onDestroy()
     }

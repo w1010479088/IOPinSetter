@@ -11,9 +11,7 @@ public class BootBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (TextUtils.equals(ACTION, intent.getAction())) {
-            Intent newIntent = new Intent(context, MainActivity.class);  // 要启动的Activity
-            newIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(newIntent);
+            PinSDKHolder.INSTANCE.init();
         }
     }
 }
