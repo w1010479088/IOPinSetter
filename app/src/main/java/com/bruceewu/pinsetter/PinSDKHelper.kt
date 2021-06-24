@@ -79,11 +79,11 @@ class PinSDKHelper(context: Context?) : IUpdater {
         LogUtils.log("$tag Error = " + ex.message)
     }
 
-    //需求:100,100,11
+    //需求:100,010,11
     private fun reset() {
         val ioReset = listOf(
             IOState(true), IOState(false), IOState(false),
-            IOState(true), IOState(false), IOState(false),
+            IOState(false), IOState(true), IOState(false),
             IOState(true), IOState(true)
         )
         for (i in 0 until IO_SIZE) {
